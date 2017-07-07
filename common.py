@@ -14,3 +14,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+import click
+from flask import Flask, render_template
+
+app = Flask(__name__)
+app.jinja_env.add_extension("pypugjs.ext.jinja.PyPugJSExtension")
+
+app.config['SERVER_NAME'] = 'argarak.dev:5000'

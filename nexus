@@ -3,7 +3,7 @@
 OPTIND=1
 
 export FLASK_DEBUG=0
-export FLASK_APP="nexus-generate/__main__.py"
+export FLASK_APP="app.py"
 
 while getopts "da:" opt; do
     case "$opt" in

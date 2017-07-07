@@ -15,18 +15,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import click
-from flask import Flask
-app = Flask(__name__)
-
-@app.cli.command()
-def deploy():
-    """Deploy the web application"""
-    click.echo("Do things!")
-
-@app.route("/")
-def hello():
-    return "Hello World!"
-
-if __name__ == "__main__":
-    hello()
+from common import app
+import serve.route
+import serve.sources
