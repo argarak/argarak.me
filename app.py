@@ -15,6 +15,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from flask import Flask
+
 from common import app
 import serve.route
 import serve.sources
