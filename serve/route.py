@@ -15,47 +15,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from common import app, sources, subdomain_list
+from common import app, common_sources, subdomain_list
 from flask import render_template
 from flask_classy import FlaskView
 
-def lookup_favicon(subdomain=None):
-    favicon_path = "/favicon/"
-
-    if subdomain == None:
-        return favicon_path + "main.png"
-
-    if not subdomain in subdomain_list:
-        return favicon_path + "invalid.png"
-
-    return favicon_path + subdomain
-
-class MainView(FlaskView):
-    route_base = "/"
-    subdomain = None
-
-    def __init__(self):
-        self.subdomain = None
-        self.template = "index.pug"
-
-
-        self.sources = {
-            "styles": [],
-            "scripts": []
-        }
-
-        self.meta = {
-            "title": "main",
-            "current_favicon": lookup_favicon(self.subdomain),
-            "default_tags": "a, b, c, d",
-            "description": "a test!",
-            "is_article": False
-        }
-
-    def index(self):
-        return render_template(self.template, sources=self.sources, meta=self.meta)
-
-MainView.register(app)
+import serve.subdomains.index
+import serve.subdomains.blog
 
 # class BlogView(FlaskView):
 #     route_base = "/"
@@ -83,9 +48,9 @@ MainView.register(app)
 
 # MainView.register(app)
 
-@app.route("/", subdomain="blog")
-def blog_home():
-    return render_template("blog.pug")
+#@app.route("/", subdomain="blog")
+#def blog_home():
+#    return render_template("blog.pug")
 
 @app.route("/<page>", subdomain="blog")
 def blog_page(page):

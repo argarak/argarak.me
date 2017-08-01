@@ -43,14 +43,9 @@ else:
 _common_styles = glob(os.path.join(app.static_folder, "css", "common") + "/**/*.css", recursive=True)
 _common_scripts = glob(os.path.join(app.static_folder, "js", "common") + "/**/*.js", recursive=True)
 
-print(_common_styles)
-print(_common_scripts)
-
-sources = {
-    "styles": ["%s" % ("https://" + i,) for i in _common_styles],
-    "scripts": [
-
-    ]
+common_sources = {
+    "styles": ["%s" % ("//" + app.config["SERVER_NAME"] + i.split("/static", 1)[1],) for i in _common_styles],
+    "scripts": ["%s" % ("//" + app.config["SERVER_NAME"] + i.split("/static", 1)[1],) for i in _common_scripts],
 }
 
 subdomain_list = [
