@@ -2,6 +2,7 @@ doctype html
 
 html(lang="en")
   head
+    {% if meta is not none %}
     title {{meta["title"]}}
 
     meta(charset="utf-8")
@@ -18,6 +19,7 @@ html(lang="en")
     {% else %}
     meta(name="keywords" content="{{meta.default_tags}}")
     {% endif %}
+    {% endif %}
     
     {% for style in sources.styles %}
     link(rel="stylesheet" href="{{style}}")
@@ -27,7 +29,8 @@ html(lang="en")
     {% for script in sources.scripts %}
     script(src="{{script}}")
     {% endfor %}
-    
+
+    block head_append
     
   body
     block body
