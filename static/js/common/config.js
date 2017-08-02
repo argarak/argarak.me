@@ -1,4 +1,2 @@
 
-Vue.config({
-    delimiters: ['${', '}']
-});
+Vue.config.delimiters = ['${', '}']

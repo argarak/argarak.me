@@ -40,8 +40,27 @@ if app.debug:
 else:
     app.config['SERVER_NAME'] = 'argarak.me'
 
+# The order at which stylesheets are loaded does not matter, so glob all
+# stylesheets including subdirectories
 _common_styles = glob(os.path.join(app.static_folder, "css", "common") + "/**/*.css", recursive=True)
-_common_scripts = glob(os.path.join(app.static_folder, "js", "common") + "/**/*.js", recursive=True)
+
+# Only select user scripts since the order at which they are loaded does
+# not matter as much as external libraries
+_common_scripts = glob(os.path.join(app.static_folder, "js", "common") + "/*.js")
+
+# The order external libraries are loaded is important and so it cannot
+# be part of the glob
+_ext_scripts = [
+    "vue.js",
+    "vue-router.js",
+    "vue-material.js"
+]
+
+_ext_scripts = ["%s" % (os.path.join(app.static_folder, "js", "common", "ext") + "/" + i,) for i in _ext_scripts]
+
+_common_scripts = _ext_scripts + _common_scripts
+
+print(_common_scripts)
 
 common_sources = {
     "styles": ["%s" % ("//" + app.config["SERVER_NAME"] + i.split("/static", 1)[1],) for i in _common_styles],
