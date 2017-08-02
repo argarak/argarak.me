@@ -1,0 +1,22 @@
+{
+  "name": "argarak.me",
+  "version": "0.0.1",
+  "description": "The argarak.me website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/argarak/argarak.me.git"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/argarak/argarak.me/issues"
+  },
+  "homepage": "https://github.com/argarak/argarak.me#readme",
+  "dependencies": {
+    "stylus": "^0.54.5"
+  }
+}
