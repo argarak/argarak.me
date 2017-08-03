@@ -35,20 +35,43 @@ html(lang="en")
     
   body
     #app
-      md-layout(column style="height: 100vh")
+      md-layout(md-column style="height: 100vh")
         block body
-        md-layout(column md-vertical-align="end")
-          md-tabs#nav-tabs(md-right)
-            md-tab(md-icon='phone')
-            md-tab(md-icon='favorite')
-            md-tab(md-icon='near_me')
+        md-layout(md-vertical-align="end")
+          md-tabs#nav-tabs(md-centered md-elevation=5)
+            template(slot="header-item" scope="props")
+              //md-icon(v-if="props.header.icon") ${ props.header.icon }
+              md-icon(v-if="props.header.options && props.header.options.icon_src" md-src="${ props.header.options.icon_src }")
+              template(v-if="props.header.options && props.header.options.new_badge")
+                span(v-if="props.header.label" class="label-with-new-badge")
+                  ${ props.header.label }
+                  span(class="new-badge") ${ props.header.options.new_badge }
+              template(v-else)
+                span(v-if="props.header.label") ${ props.header.label }
+
+            md-tab(md-icon-src="https://argarak.github.io/navbar/nexus.svg")
+            md-tab(md-icon='info')
+            md-tab(md-icon='subject')
+            md-tab(md-icon='archive')
+            md-tab(md-icon='chat_bubble')
+            md-tab(md-icon='rss_feed')             
     script.
-      Vue.use(VueMaterial)
+      Vue.use(VueMaterial);
       
+      Vue.material.registerTheme('default', {
+        primary: 'red',
+        accent: 'pink',
+        warn: 'red',
+        background: {
+          color: 'grey',
+          hue: 900
+        }
+      });
+
       var app = new Vue({
         el: '#app',
         data: {
           tabs: ["a", "b", "c"],
           active: true
         }
-      })
+      });

@@ -1,3 +1,28 @@
-// Disable content area under tabs for navigation
-#nav-tabs .md-tabs-content
-  display none
+
+#nav-tabs
+  .md-tabs-navigation
+    background-color #070707
+
+  // Disable content area under tabs for navigation
+  .md-tabs-content
+    display none
+
+// Outlines ruin everything!
+button:active,
+button:focus
+  -moz-outline-style none
+  outline-style none
+  outline-width 0px
+  outline-color -moz-use-text-color
+
+&::-moz-focus-inner
+   border 0
+
+body
+  background-color #0e0e0e
+
+.md-theme-default.md-tabs > .md-tabs-navigation .md-tab-header.md-active
+	filter brightness(100%)
+
+.md-theme-default.md-tabs > .md-tabs-navigation .md-tab-header:not(.md-active)
+  filter brightness(20%)
