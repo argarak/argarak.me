@@ -15,7 +15,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from common import app, common_sources
+from common import app, common_sources, options
 from serve.subdomains.index import MainView
 from serve.utils import lookup_favicon
 from flask_classy import FlaskView
@@ -54,7 +54,14 @@ class BlogView(MainView):
 
                 title = soup.find('title')
                 base = soup.new_tag('base')
-                base['href'] = "//" + app.config["SERVER_NAME"] + "/articles/" + article_name + "/"
+
+                base['href'] = ''.join((options["protocol"],
+                                        "//",
+                                        app.config["SERVER_NAME"],
+                                        "/articles/",
+                                        article_name,
+                                        "/"))
+
                 title.insert_after(base)
 
                 return render_template(self.article_template, html=str(soup),

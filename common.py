@@ -18,6 +18,7 @@
 import os
 import click
 from flask import Flask, render_template, send_from_directory, Response
+from flask_cors import CORS
 from glob import glob
 
 from stylus import Stylus
@@ -35,8 +36,15 @@ class CustomFlask(Flask):
         comment_end_string='#]',
     ))
 
+options = {
+    'protocol': ''
+}
+
 app = Flask(__name__)
 app.jinja_env.add_extension("pypugjs.ext.jinja.PyPugJSExtension")
+
+# Enable CORS (cross-origin) between subdomains
+CORS(app)
 
 if app.debug:
     import serve.debug
@@ -115,14 +123,21 @@ def compile_to_css(path):
                 except IOError as err:
                     print(err)
 
-    return send_from_directory('static/css/' + path[:-len(path.split("/")[-1])],
-                               path.split("/")[-1] + ".css")
+    return send_from_directory('static/css/' + path[:-len(
+        path.split("/")[-1])], path.split("/")[-1] + ".css")
 
 common_sources = {
-    "styles": ["%s" % ("//" + app.config["SERVER_NAME"] + i.split("/static", 1)[1],)
-               for i in _common_styles],
-    "scripts": ["%s" % ("//" + app.config["SERVER_NAME"] + i.split("/static", 1)[1],)
-                for i in _common_scripts],
+    "styles":  ["%s" % (''.join((options["protocol"],
+                                 "//",
+                                 app.config["SERVER_NAME"],
+                                 i.split("/static", 1)[1])),)
+                for i in _common_styles],
+
+    "scripts": ["%s" % (''.join((options["protocol"],
+                                 "//",
+                                 app.config["SERVER_NAME"],
+                                 i.split("/static", 1)[1])),)
+                for i in _common_scripts]
 }
 
 subdomain_list = [

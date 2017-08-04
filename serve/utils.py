@@ -15,11 +15,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from common import subdomain_list, app
+from common import subdomain_list, app, options
 from bs4 import BeautifulSoup as Soup
 
 def lookup_favicon(subdomain=None):
-    favicon_path = "//" + app.config["SERVER_NAME"] + "/favicon/"
+    favicon_path = ''.join((options["protocol"],
+                           "//",
+                           app.config["SERVER_NAME"],
+                           "/favicon/"))
 
     if subdomain == None:
         return favicon_path + "main.png?"
@@ -52,3 +55,10 @@ def extract_body(html):
             output += str(child)
 
     return output
+
+@app.template_filter("absolute")
+def absolute_static_url(url):
+    return ''.join((options["protocol"],
+                    "//",
+                    app.config["SERVER_NAME"],
+                    url))
