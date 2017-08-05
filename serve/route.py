@@ -22,39 +22,6 @@ from flask_classy import FlaskView
 import serve.subdomains.index
 import serve.subdomains.blog
 
-# class BlogView(FlaskView):
-#     route_base = "/"
-#     subdomain = "blog"
-
-#     def __init__(self):
-#         self.subdomain = "blog"
-#         self.template = "blog.pug"
-
-#         self.sources = {
-#             "styles": [],
-#             "scripts": []
-#         }
-
-#         self.meta = {
-#             "title": "what lies within is void",
-#             "curront_favicon": lookup_favicon(),
-#             "default_tags": "test, thing, argarak, main",
-#             "description": "spaghetti",
-#             "is_article": False
-#         }
-
-#     def index(self):
-#         return render_template(self.template, sources=self.sources, meta=self.meta)
-
-# MainView.register(app)
-
-#@app.route("/", subdomain="blog")
-#def blog_home():
-#    return render_template("blog.pug")
-
 @app.route("/<page>", subdomain="blog")
 def blog_page(page):
     return "You navigated to: {}".format(page)
-
-#if __name__ == "__main__":
-#    hello()

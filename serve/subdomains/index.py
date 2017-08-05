@@ -42,6 +42,8 @@ class MainView(FlaskView):
         }
 
     def index(self):
-        return render_template(self.template, sources=self.sources, meta=self.meta)
+        return render_template(self.template,
+                               sources=self.sources,
+                               meta=self.meta)
 
 MainView.register(app)

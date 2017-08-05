@@ -46,9 +46,12 @@ class BlogView(MainView):
 
     def article(self, article_name):
         try:
-            with app.open_resource("static/articles/" + article_name + "/index.md") as f:
+            with app.open_resource(''.join(("static/articles/",
+                                            article_name,
+                                            "/index.md"))) as f:
                 output = pypandoc.convert_text(f.read().decode(), "html",
-                                               extra_args=["--standalone"], format="md")
+                                               extra_args=["--standalone"],
+                                               format="md")
 
                 soup = Soup(output, "html.parser")
 
