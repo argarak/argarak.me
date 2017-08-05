@@ -1,0 +1,15 @@
+beautifulsoup4==4.6.0
+bs4==0.0.1
+click==6.7
+Flask==0.12.2
+Flask-Classy==0.6.10
+Flask-Cors==3.0.3
+itsdangerous==0.24
+Jinja2==2.9.6
+MarkupSafe==1.0
+PyExecJS==1.4.0
+pypandoc==1.4
+pypugjs==4.2.2
+six==1.10.0
+stylus==0.1.2
+Werkzeug==0.12.2
