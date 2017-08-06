@@ -35,15 +35,14 @@ html(lang="en")
     block head_append
     
   body
+    script.
+      absoluteStaticUrl = "{{'' | absolute}}"
     #app
       md-layout(md-row style="height: 100vh")
         block body
         //md-layout(md-vertical-align="end")
-        md-tabs#nav-tabs(md-centered md-elevation=5)
-          md-tab(md-icon-src="{{'/icon/nexus.svg'     | absolute }}")
-          md-tab(md-icon-src="{{'/icon/about.svg'     | absolute }}")
-          md-tab(md-icon-src="{{'/icon/blog.svg'      | absolute }}")
-          md-tab(md-icon-src="{{'/icon/programs.svg'  | absolute }}")
-          md-tab(md-icon-src="{{'/icon/archive.svg'   | absolute }}")
-          md-tab(md-icon-src="{{'/icon/microblog.svg' | absolute }}")
-          md-tab(md-icon-src="{{'/icon/rss.svg'       | absolute }}")
+        md-tabs#nav-tabs(md-centered md-elevation=5
+        :md-indicator-style="indicatorStyle"
+        @change="navbarTabsChange")
+          md-tab(v-for="(colour, icon) in navbarTabs"
+          :md-icon-src="'{{'/icon/' | absolute}}' + icon")

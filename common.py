@@ -68,7 +68,8 @@ _common_scripts = glob(os.path.join(app.static_folder,
 _ext_scripts = [
     "vue.js",
     "vue-router.js",
-    "vue-material.js"
+    "vue-material.js",
+    "vue-resource.js"
 ]
 
 _ext_scripts = ["%s" % (os.path.join(app.static_folder, "js", "common",
