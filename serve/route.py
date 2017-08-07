@@ -15,13 +15,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from common import app, common_sources, subdomain_list
+from common import app, common_sources
 from flask import render_template
 from flask_classy import FlaskView
 
 import serve.subdomains.index
 import serve.subdomains.blog
-
-@app.route("/<page>", subdomain="blog")
-def blog_page(page):
-    return "You navigated to: {}".format(page)

@@ -21,6 +21,8 @@ from flask import Flask, render_template, send_from_directory, Response
 from flask_cors import CORS
 from glob import glob
 
+from config import config
+
 from stylus import Stylus
 c_stylus = Stylus()
 #c_stylus.use("nib")
@@ -36,10 +38,6 @@ class CustomFlask(Flask):
         comment_end_string='#]',
     ))
 
-options = {
-    'protocol': ''
-}
-
 app = Flask(__name__)
 app.jinja_env.add_extension("pypugjs.ext.jinja.PyPugJSExtension")
 
@@ -51,6 +49,25 @@ if app.debug:
     app.config['SERVER_NAME'] = 'argarak.dev:5000'
 else:
     app.config['SERVER_NAME'] = 'argarak.me'
+
+
+for i, val in enumerate(config["navbar"]):
+    print(i)
+
+    url_list = [config["protocol"], "//"]
+
+    if config["subdomains"][i]:
+        url_list += config["subdomains"][i] + "."
+
+    url_list += app.config["SERVER_NAME"]
+
+    if "path" in val:
+        url_list += val["path"]
+
+    config["navbar"][i]["url"] = "".join(tuple(url_list))
+
+print(config["navbar"])
+
 
 # The order at which stylesheets are loaded does not matter, so glob all
 # stylesheets including subdirectories
@@ -128,21 +145,15 @@ def compile_to_css(path):
         path.split("/")[-1])], path.split("/")[-1] + ".css")
 
 common_sources = {
-    "styles":  ["%s" % (''.join((options["protocol"],
+    "styles":  ["%s" % (''.join((config["protocol"],
                                  "//",
                                  app.config["SERVER_NAME"],
                                  i.split("/static", 1)[1])),)
                 for i in _common_styles],
 
-    "scripts": ["%s" % (''.join((options["protocol"],
+    "scripts": ["%s" % (''.join((config["protocol"],
                                  "//",
                                  app.config["SERVER_NAME"],
                                  i.split("/static", 1)[1])),)
                 for i in _common_scripts]
 }
-
-subdomain_list = [
-    "blog",
-    "archive",
-    "dev",
-]

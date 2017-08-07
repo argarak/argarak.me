@@ -31,10 +31,10 @@ def navbar():
 
     print(icon_path + "*.svg")
 
-    for i in config["navbar"]:
+    for i, val in enumerate(config["navbar"]):
         print(i)
         try:
-            with open(icon_path + i) as f:
+            with open(icon_path + val["filename"]) as f:
                 soup = Soup(f.read())
                 colour = ""
 
@@ -52,7 +52,7 @@ def navbar():
                         if stroke_colour != None and stroke_colour != "none":
                             colour = stroke_colour
 
-                icon_data[i.split("/")[-1]] = colour
+                icon_data[val["filename"]] = colour
 
         except IOError as err:
             print(err)

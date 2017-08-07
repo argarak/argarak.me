@@ -22,7 +22,6 @@ document.addEventListener("DOMContentLoaded", function() {
     var navbarData = absoluteStaticUrl + "/data/navbar.json";
 
     Vue.use(VueMaterial);
-    Vue.use(VueRouter);
     Vue.use(VueResource);
 
     Vue.material.registerTheme('default', {
@@ -39,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function() {
         el: '#app',
         data: {
             indicatorStyle: {
-                backgroundColor: "orange"
+                backgroundColor: "none"
             },
             navbarTabs: {}
         },
