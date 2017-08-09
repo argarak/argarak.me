@@ -52,7 +52,11 @@ def navbar():
                         if stroke_colour != None and stroke_colour != "none":
                             colour = stroke_colour
 
-                icon_data[val["filename"]] = colour
+                icon_data[val["filename"]] = {
+                    "color": colour,
+                    "tooltip": val["tooltip"],
+                    "url": val["url"]
+                }
 
         except IOError as err:
             print(err)

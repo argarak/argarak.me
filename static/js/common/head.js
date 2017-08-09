@@ -16,13 +16,21 @@
 // limitations under the License.
 
 document.addEventListener("DOMContentLoaded", function() {
-    console.log("static_url: " + absoluteStaticUrl);
-
     // Must wait for DOM to load befor we can use absoluteStaticUrl
     var navbarData = absoluteStaticUrl + "/data/navbar.json";
 
     Vue.use(VueMaterial);
     Vue.use(VueResource);
+
+    var getSubdomain = function() {
+        var urlData = window.location.host.split(".");
+
+        if(urlData.length < 3) {
+            return null;
+        }
+
+        return urlData[0];
+    };
 
     Vue.material.registerTheme('default', {
         primary: 'red',
@@ -40,23 +48,86 @@ document.addEventListener("DOMContentLoaded", function() {
             indicatorStyle: {
                 backgroundColor: "none"
             },
-            navbarTabs: {}
+            navbarTabs: {},
+            navbarActiveList: [],
+            toptenlist: [
+                {label: "item-the-first"},
+                {label: "item-the-second"},
+                {label: "item-the-third"},
+                {label: "item-the-fourth"},
+                {label: "item-the-fifth"},
+                {label: "item-the-sixth"}
+            ]
         },
         methods: {
             getNavbarTabs: function() {
-                this.$http.get(navbarData).then(response => {
-                    console.log(response);
+                this.$http.get(navbarData).then(response => {                     
                     this.navbarTabs = response.body;
+
+                    this.selectTab();
                 }, response => {
-                    console.log(response.statusText);
+                    console.warn(response.statusText);
                 });
             },
 
             navbarTabsChange: function(e) {
                 this.indicatorStyle.backgroundColor =
-                    this.navbarTabs[Object.keys(this.navbarTabs)[e]];
+                    this.navbarTabs[Object.keys(this.navbarTabs)[e]].color;
+            },
+
+            bestFilter: function(list, query) {
+                var arr = list.filter(function(item) {
+                    if(item.label === query)
+                        return false;
+
+                    return item.label.indexOf(query) === -1 ? false : true;
+                });
+
+                return arr;
+            },
+
+            selectTab: function() {
+                var subdomain = getSubdomain();
+                var keySubdomain;
+
+                if(Object.keys(this.navbarTabs).length === 0 &&
+                   this.navbarTabs.constructor === Object) {
+                    console.error("Active tab could not be selected, " +
+                                  "navbarTabs is empty.");
+                    return false;
+                }
+
+                this.navbarActiveList = [];
+
+                for(var i = 0; i < Object.keys(this.navbarTabs).length; ++i) {
+                    this.navbarActiveList.push(false);
+                }
+
+                var index = 0;
+                var self = this;
+
+                Object.keys(this.navbarTabs).some(function(key) {
+                    var url = self.navbarTabs[key].url.split('/')[2];
+                    
+                    // No subdomain
+                    if(url.split(".").length < 3) {
+                        keySubdomain = null;
+                    } else {
+                        keySubdomain = url.split(".")[0];
+                    }
+
+                    if(keySubdomain === subdomain) {
+                        self.navbarActiveList[index] = true;
+                        return true;
+                    }
+
+                    ++index;
+                });
+
+                return true;
             }
         },
+
         beforeMount() {
             this.getNavbarTabs();
         }

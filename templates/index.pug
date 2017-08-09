@@ -4,3 +4,11 @@ block body
   h1 Welcome to argarak.me! 
   //img#test(src="/img/cat.jpg" alt="test image")
   p The page that will soon exist.
+
+  form(novalidate)
+    md-input-container
+      label Autocomplete Test
+      md-autocomplete(v-model="autocompleteValue" 
+      :list="toptenlist"
+      print-attribute="label"
+      :filter-list="bestFilter")
