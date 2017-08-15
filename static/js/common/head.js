@@ -42,22 +42,13 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
+    Vue.material.setCurrentTheme('default');
+    
     var app = new Vue({
         el: '#app',
         data: {
-            indicatorStyle: {
-                backgroundColor: "none"
-            },
             navbarTabs: {},
-            navbarActiveList: [],
-            toptenlist: [
-                {label: "item-the-first"},
-                {label: "item-the-second"},
-                {label: "item-the-third"},
-                {label: "item-the-fourth"},
-                {label: "item-the-fifth"},
-                {label: "item-the-sixth"}
-            ]
+            navbarActiveList: []
         },
         methods: {
             getNavbarTabs: function() {
@@ -71,19 +62,11 @@ document.addEventListener("DOMContentLoaded", function() {
             },
 
             navbarTabsChange: function(e) {
-                this.indicatorStyle.backgroundColor =
-                    this.navbarTabs[Object.keys(this.navbarTabs)[e]].color;
-            },
-
-            bestFilter: function(list, query) {
-                var arr = list.filter(function(item) {
-                    if(item.label === query)
-                        return false;
-
-                    return item.label.indexOf(query) === -1 ? false : true;
-                });
-
-                return arr;
+                this.$el.firstChild
+                    .querySelector("#nav-tabs")
+                    .querySelectorAll(".md-tab-indicator")[0]
+                    .style.backgroundColor = this.navbarTabs[
+                        Object.keys(this.navbarTabs)[e]].color;
             },
 
             selectTab: function() {
@@ -125,7 +108,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 });
 
                 return true;
-            }
+            },
         },
 
         beforeMount() {
