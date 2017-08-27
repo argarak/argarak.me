@@ -25,7 +25,7 @@ The overall infrastructure is still under consideration however currently I’m 
 
 To start a debug flask server, use the `nexus` script like so:
 
-`./flask -d run`
+`./nexus -d run`
 
 ## What's going to happen to `argarak.github.io`?
 
