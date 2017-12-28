@@ -44,10 +44,12 @@ html(lang="en")
         //md-layout(md-vertical-align="end")
         md-tabs#nav-tabs(md-centered md-elevation=5 
         :md-navigation="false"
-        @change="navbarTabsChange")
+        @change="routeTabs")
           md-tab(v-for="(data, icon, index) in navbarTabs"
+          :key="index"
           :md-icon-src="'{{'/icon/' | absolute}}' + icon"
           :md-tooltip="data.tooltip"
           md-tooltip-direction="top"
           md-tooltip-delay=1000
           :md-active="navbarActiveList[index]")
+      router-view

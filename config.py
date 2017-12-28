@@ -19,7 +19,7 @@ config = {
     "debug_domain": "argarak.dev:5000",
     "domain": "argarak.me",
 
-    "subdomains": [
+    "subdirectories": [
         "",
         "about",
         "blog",

@@ -19,19 +19,19 @@ from common import app
 from config import config
 from bs4 import BeautifulSoup as Soup
 
-def lookup_favicon(subdomain=None):
+def lookup_favicon(directory=None):
     favicon_path = ''.join((config["protocol"],
                            "//",
                            app.config["SERVER_NAME"],
                            "/favicon/"))
 
-    if subdomain == None:
+    if directory == None:
         return favicon_path + "main.png?"
 
-    if not subdomain in config["subdomains"]:
+    if not directory in config["subdirectories"]:
         return favicon_path + "invalid.png?"
 
-    return favicon_path + subdomain + ".png?"
+    return favicon_path + directory + ".png?"
 
 @app.template_filter()
 def extract_head(html):

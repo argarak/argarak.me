@@ -27,8 +27,7 @@ import pypandoc
 from bs4 import BeautifulSoup as Soup
 
 class BlogView(MainView):
-    route_base = "/"
-    subdomain = "blog"
+    route_base = "/blog"
 
     def __init__(self):
         self.subdomain = "blog"
@@ -73,6 +72,5 @@ class BlogView(MainView):
 
         except IOError as err:
             print(err)
-
 
 BlogView.register(app)

@@ -52,19 +52,19 @@ else:
 
 
 for i, val in enumerate(config["navbar"]):
-    print(i)
+    # url_list = [config["protocol"], "//"]
+    url = "/"
 
-    url_list = [config["protocol"], "//"]
+    if config["subdirectories"][i]:
+        url += config["subdirectories"][i]
 
-    if config["subdomains"][i]:
-        url_list += config["subdomains"][i] + "."
+    # url_list += app.config["SERVER_NAME"]
 
-    url_list += app.config["SERVER_NAME"]
+    # if "path" in val:
+    #     url_list += val["path"]
 
-    if "path" in val:
-        url_list += val["path"]
-
-    config["navbar"][i]["url"] = "".join(tuple(url_list))
+    # config["navbar"][i]["url"] = "".join(tuple(url_list))
+    config["navbar"][i]["url"] = url
 
 print(config["navbar"])
 
@@ -82,12 +82,7 @@ _common_scripts = glob(os.path.join(app.static_folder,
 
 # The order external libraries are loaded is important and so it cannot
 # be part of the glob
-_ext_scripts = [
-    "vue.js",
-    "vue-router.js",
-    "vue-material.js",
-    "vue-resource.js"
-]
+_ext_scripts = []
 
 _ext_scripts = ["%s" % (os.path.join(app.static_folder, "js", "common",
                                      "ext") + "/" + i,)
