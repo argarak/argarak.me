@@ -97,6 +97,8 @@ _common_stylus = glob(os.path.join(app.static_folder, "css",
 _common_styles += ["%s" % (os.path.splitext(i)[0] + ".css",)
                    for i in _common_stylus]
 
+navbar = config["navbar"]
+
 # Intercepts calls to css files to see if any of them are really stylus
 # files. If it is a stylus file (.styl) then we compile it and return
 # the compiled version as if it was in css in the first place.

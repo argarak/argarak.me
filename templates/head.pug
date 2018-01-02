@@ -35,21 +35,10 @@ html(lang="en")
     block head_append
     
   body
-    script.
-      absoluteStaticUrl = "{{'' | absolute}}"
     #app
-      md-layout(md-row style="height: 100vh")
-        #container
-          block body
-        //md-layout(md-vertical-align="end")
-        md-tabs#nav-tabs(md-centered md-elevation=5 
-        :md-navigation="false"
-        @change="routeTabs")
-          md-tab(v-for="(data, icon, index) in navbarTabs"
-          :key="index"
-          :md-icon-src="'{{'/icon/' | absolute}}' + icon"
-          :md-tooltip="data.tooltip"
-          md-tooltip-direction="top"
-          md-tooltip-delay=1000
-          :md-active="navbarActiveList[index]")
-      router-view
+      #container
+        block body
+      #navigation
+        each tab in tabs
+          .tab!= tab.svgData
+        

@@ -15,10 +15,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from common import app, common_sources
+from common import app, common_sources, navbar
 from flask import render_template
 from flask_classy import FlaskView
 from serve.utils import lookup_favicon
+
+from os import path
 
 class MainView(FlaskView):
     route_base = "/"
@@ -41,9 +43,21 @@ class MainView(FlaskView):
             "is_article": False
         }
 
+        self.tabs = navbar
+
+        i = 0
+
+        for tab in self.tabs:
+            with open(path.join(app.static_folder, "icon", tab["filename"]), "r") as f:
+                self.tabs[i]["svgData"] = f.read()
+            i += 1
+
+        print(self.tabs)
+
     def index(self):
         return render_template(self.template,
                                sources=self.sources,
-                               meta=self.meta)
+                               meta=self.meta,
+                               tabs=self.tabs)
 
 MainView.register(app)
