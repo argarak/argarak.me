@@ -32,7 +32,7 @@ config = {
     # HTTP/HTTPS
     "protocol": "",
 
-    # Setsn the order the navbar will be
+    # Sets the order the navbar will be
     "navbar": [
         {
             "filename": "nexus.svg",

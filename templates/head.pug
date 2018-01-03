@@ -41,5 +41,5 @@ html(lang="en")
       #navigation
         .tab-container
           each tab in tabs
-            .tab(subdir=tab.url)!= tab.svgData
-        .highlight-bar
+            .tab(subdir=tab.url position=tab.index)!= tab.svgData
+          .highlight-bar

@@ -2,37 +2,37 @@
 document.addEventListener(
   "DOMContentLoaded",
   function() {
-    var highlight = document.querySelectorAll("#navigation .highlight-bar")[0];
-    var subdir = window.location.pathname.split("/")[1];
-
-    var tabElement;
-    var highlightColor;
-
-    if (subdir.length === 0) {
-      tabElement = document.querySelectorAll(
-        "#navigation .tab-container .tab[subdir='']"
+    var updateHighlight = function() {
+      var highlight = document.querySelectorAll(
+        "#navigation .highlight-bar"
       )[0];
+      var subdir = window.location.pathname.split("/")[1];
 
-      highlightColor = tabElement.firstChild.firstChild.attributes.stroke.value;
-    } else {
-      tabElement = document.querySelectorAll(
-        "#navigation .tab-container .tab[subdir~='" + subdir + "']"
-      )[0];
+      var tabElement;
+      var highlightColor;
 
-      highlightColor = tabElement.firstChild.firstChild.attributes.fill.value;
-    }
+      if (subdir.length === 0) {
+        tabElement = document.querySelectorAll(
+          "#navigation .tab-container .tab[subdir='']"
+        )[0];
 
-    highlight.style.backgroundColor = highlightColor;
+        highlightColor =
+          tabElement.firstChild.firstChild.attributes.stroke.value;
+      } else {
+        tabElement = document.querySelectorAll(
+          "#navigation .tab-container .tab[subdir~='" + subdir + "']"
+        )[0];
 
-    var tabRect = tabElement.getBoundingClientRect();
+        highlightColor = tabElement.firstChild.firstChild.attributes.fill.value;
+      }
 
-    console.log(tabRect);
+      highlight.style.backgroundColor = highlightColor;
 
-    highlight.style.right = tabRect.right + "px";
-    highlight.style.left = tabRect.left + "px";
-    highlight.style.width = tabRect.width + "px";
+      var pos = tabElement.attributes.position.value;
+      highlight.style.right = 448 - pos * 64 + "px";
+    };
 
-    console.log(highlightColor);
+    updateHighlight();
   },
   false
 );

@@ -16,20 +16,27 @@ $nav-color = #070707
 
   background-color $nav-color
 
-  .highlight-bar
-    position absolute
-    bottom 0
-    background-color #000
-    height 3px
-
   .tab-container
     flex 99
     display flex
     align-items center
 
+    max-width 100vw
+    overflow-x hidden
+
+    margin-left 48px
+
+    .highlight-bar
+      position relative
+      bottom -23px
+      height 2px
+      min-width 64px
+
+      background-color #000
+
     .tab
       user-drag none
       user-select none
       padding 8px
-      *
-        height 24px
+    *
+      height 24px
