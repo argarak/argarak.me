@@ -1,6 +1,7 @@
 
 $nav-color = #070707
 
+/* Colour and Positioning */
 #navigation
   display flex
   position fixed
@@ -28,7 +29,7 @@ $nav-color = #070707
 
     .highlight-bar
       position relative
-      bottom -23px
+      bottom -22px
       height 2px
       min-width 64px
 
@@ -38,5 +39,30 @@ $nav-color = #070707
       user-drag none
       user-select none
       padding 8px
-    *
-      height 24px
+      *
+        height 24px
+
+/* Interactivity */
+.tab
+  transition all 0.1s
+
+  &:hover
+    background rgba(255,255,255,0.01)
+    border-radius 2px
+    cursor pointer
+
+  &:focus
+    outline none
+    background rgba(255,255,255,0.1)
+    border-radius 2px
+    cursor pointer
+
+  &:active
+    background rgba(255,255,255,0.1)
+
+#navigation
+  transition all 0.2s linear
+  filter brightness(50%)
+
+  &:hover
+    filter brightness(100%)

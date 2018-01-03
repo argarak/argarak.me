@@ -34,6 +34,7 @@ class MainView(FlaskView):
             with open(path.join(app.static_folder, "icon", tab["filename"]), "r") as f:
                 self.tabs[i]["svgData"] = f.read()
             self.tabs[i]["index"] = i
+            self.tabs[i]["aburl"] = "/" + tab["url"]
             i += 1
 
     def __init__(self):

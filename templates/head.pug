@@ -36,10 +36,12 @@ html(lang="en")
     
   body
     #app
-      #container
+      #router-container
         block body
       #navigation
         .tab-container
           each tab in tabs
-            .tab(subdir=tab.url position=tab.index)!= tab.svgData
+            a.tab(href=tab.aburl
+                  subdir=tab.url 
+                  position=tab.index)!= tab.svgData
           .highlight-bar

@@ -33,6 +33,20 @@ document.addEventListener(
     };
 
     updateHighlight();
+
+    if (!!(window.history && history.pushState)) {
+      var tabList = document.querySelectorAll(
+        "#navigation .tab-container .tab"
+      );
+
+      for (var i = 0; i < tabList.length; ++i) {
+        tabList[i].addEventListener("click", function(e) {
+          e.preventDefault();
+
+          router.subdir(this.attributes.subdir.value);
+        });
+      }
+    }
   },
   false
 );
