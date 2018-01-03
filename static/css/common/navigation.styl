@@ -1,0 +1,35 @@
+
+$nav-color = #070707
+
+#navigation
+  display flex
+  position fixed
+
+  flex-direction column
+  justify-content center
+  align-items center
+
+  height 48px
+  width 100vw
+
+  bottom 0
+
+  background-color $nav-color
+
+  .highlight-bar
+    position absolute
+    bottom 0
+    background-color #000
+    height 3px
+
+  .tab-container
+    flex 99
+    display flex
+    align-items center
+
+    .tab
+      user-drag none
+      user-select none
+      padding 8px
+      *
+        height 24px

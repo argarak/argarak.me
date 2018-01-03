@@ -25,14 +25,14 @@ config = {
         "blog",
         "dev",
         "archive",
-        "microblog",
+        "ublog",
         "rss"
     ],
 
     # HTTP/HTTPS
     "protocol": "",
 
-    # Sets the order the navbar will be
+    # Setsn the order the navbar will be
     "navbar": [
         {
             "filename": "nexus.svg",

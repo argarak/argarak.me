@@ -39,6 +39,7 @@ html(lang="en")
       #container
         block body
       #navigation
-        each tab in tabs
-          .tab!= tab.svgData
-        
+        .tab-container
+          each tab in tabs
+            .tab(subdir=tab.url)!= tab.svgData
+        .highlight-bar

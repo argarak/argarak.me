@@ -15,7 +15,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from common import app, common_sources
+from common import app, common_sources, navbar
 from config import config
 from serve.subdomains.index import MainView
 from serve.utils import lookup_favicon
@@ -44,6 +44,8 @@ class BlogView(MainView):
             "is_article": False
         }
 
+        self.generate_tabs(navbar)
+
     def article(self, article_name):
         try:
             with app.open_resource(''.join(("static/articles/",
@@ -67,8 +69,11 @@ class BlogView(MainView):
 
                 title.insert_after(base)
 
-                return render_template(self.article_template, html=str(soup),
-                                       meta=None, sources=self.sources)
+                return render_template(self.article_template,
+                                       html=str(soup),
+                                       meta=None,
+                                       sources=self.sources,
+                                       tabs=self.tabs)
 
         except IOError as err:
             print(err)

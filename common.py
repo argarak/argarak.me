@@ -53,7 +53,7 @@ else:
 
 for i, val in enumerate(config["navbar"]):
     # url_list = [config["protocol"], "//"]
-    url = "/"
+    url = ""
 
     if config["subdirectories"][i]:
         url += config["subdirectories"][i]
@@ -67,7 +67,6 @@ for i, val in enumerate(config["navbar"]):
     config["navbar"][i]["url"] = url
 
 print(config["navbar"])
-
 
 # The order at which stylesheets are loaded does not matter, so glob all
 # stylesheets including subdirectories

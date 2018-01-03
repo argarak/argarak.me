@@ -26,6 +26,15 @@ class MainView(FlaskView):
     route_base = "/"
     subdomain = None
 
+    def generate_tabs(self, navbar):
+        self.tabs = navbar
+        i = 0
+
+        for tab in self.tabs:
+            with open(path.join(app.static_folder, "icon", tab["filename"]), "r") as f:
+                self.tabs[i]["svgData"] = f.read()
+            i += 1
+
     def __init__(self):
         self.subdomain = None
         self.template = "index.pug"
@@ -43,16 +52,7 @@ class MainView(FlaskView):
             "is_article": False
         }
 
-        self.tabs = navbar
-
-        i = 0
-
-        for tab in self.tabs:
-            with open(path.join(app.static_folder, "icon", tab["filename"]), "r") as f:
-                self.tabs[i]["svgData"] = f.read()
-            i += 1
-
-        print(self.tabs)
+        self.generate_tabs(navbar)
 
     def index(self):
         return render_template(self.template,
