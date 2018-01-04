@@ -23,13 +23,22 @@ document.addEventListener(
           "#navigation .tab-container .tab[subdir~='" + subdir + "']"
         )[0];
 
-        highlightColor = tabElement.firstChild.firstChild.attributes.fill.value;
+        var childElements = tabElement.firstChild.children;
+
+        for (var i in childElements) {
+          if (childElements[i].attributes.fill.value !== "none") {
+            highlightColor = childElements[i].attributes.fill.value;
+            break;
+          }
+        }
       }
 
       highlight.style.backgroundColor = highlightColor;
 
       var pos = tabElement.attributes.position.value;
       highlight.style.right = 448 - pos * 64 + "px";
+
+      router.prevSub = pos;
     };
 
     updateHighlight();
@@ -43,7 +52,10 @@ document.addEventListener(
         tabList[i].addEventListener("click", function(e) {
           e.preventDefault();
 
+          var container = document.getElementById("router-container");
+
           router.subdir(this.attributes.subdir.value);
+          updateHighlight();
         });
       }
     }

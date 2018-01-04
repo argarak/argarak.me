@@ -1,7 +1,51 @@
 
+/*
+ * Add Roboto font (and variants) using @font-face because why should you need
+ * to make a external request to Google's APIs anyway when you can have it
+ * self-hosted?
+ */
+@font-face
+  font-family "Roboto"
+  src url("/font/roboto/Roboto-Regular.woff2") format("woff2"),
+      url("/font/roboto/Roboto-Regular.woff") format("woff"),
+      url("/font/roboto/Roboto-Regular.ttf") format("truetype");
+  font-weight 400
+
+@font-face
+  font-family "Roboto"
+  src url("/font/roboto/Roboto-Light.woff2") format("woff2"),
+      url("/font/roboto/Roboto-Light.woff") format("woff"),
+      url("/font/roboto/Roboto-Light.ttf") format("truetype");
+  font-weight 300
+
+@font-face
+  font-family "Roboto"
+  src url("/font/roboto/Roboto-Medium.woff2") format("woff2"),
+      url("/font/roboto/Roboto-Medium.woff") format("woff"),
+      url("/font/roboto/Roboto-Medium.ttf") format("truetype");
+  font-weight 500
+
+@font-face
+  font-family "Roboto"
+  src url("/font/roboto/Roboto-Bold.woff2") format("woff2"),
+      url("/font/roboto/Roboto-Bold.woff") format("woff"),
+      url("/font/roboto/Roboto-Bold.ttf") format("truetype");
+  font-weight 700
+
 body
   background-color #111
   color #ccc
 
   margin 0
   padding 0
+
+  font-family "Roboto", sans-serif
+  speak none
+
+  font-style normal
+  font-weight 300
+  font-variant normal
+  text-transform none
+
+  -webkit-font-smoothing antialiased
+  line-height 1.5

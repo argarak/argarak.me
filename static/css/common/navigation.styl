@@ -1,5 +1,7 @@
 
 $nav-color = #070707
+$move-in-time = 0.2s
+$move-out-time = 0.5s
 
 /* Colour and Positioning */
 #navigation
@@ -16,6 +18,7 @@ $nav-color = #070707
   bottom 0
 
   background-color $nav-color
+  box-shadow 0px 0px 5px #000
 
   .tab-container
     flex 99
@@ -34,6 +37,7 @@ $nav-color = #070707
       min-width 64px
 
       background-color #000
+      transition all 0.1s cubic-bezier(.5, .05, .59, .97)
 
     .tab
       user-drag none
@@ -56,13 +60,61 @@ $nav-color = #070707
     background rgba(255,255,255,0.1)
     border-radius 2px
     cursor pointer
-
-  &:active
-    background rgba(255,255,255,0.1)
-
+    
 #navigation
   transition all 0.2s linear
   filter brightness(50%)
 
   &:hover
     filter brightness(100%)
+
+#router-container
+  overflow-wrap normal
+  white-space nowrap
+  position fixed
+
+@keyframes slideOutRight
+  from
+    left 0vw
+  to
+    left 100vw
+
+@keyframes slideInLeft
+  from
+    left -100vw
+  to
+    left 0vw
+
+@keyframes slideOutLeft
+  from
+    left 0vw
+  to
+    left -100vw
+
+@keyframes slideInRight
+  from
+    left 100vw
+  to
+    left 0vw
+
+.router-move-out-right
+  animation $move-out-time slideOutRight ease-in
+
+.router-move-in-left
+  animation $move-in-time slideInLeft ease-out
+
+.router-move-out-left
+  animation $move-out-time slideOutLeft ease-in
+
+.router-move-in-right
+  animation $move-in-time slideInRight ease-out
+
+.fill
+  background red
+  height 100vh
+  width 100vw
+
+.fill-2
+  background green
+  height 100vh
+  width 100vw
