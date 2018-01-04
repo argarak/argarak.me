@@ -17,6 +17,19 @@ class Router {
     var container = document.getElementById("router-container");
     var routeContainer = response.getElementById("router-container");
 
+    var routeLink = response.querySelector("link[rel*='icon']");
+    var link = document.querySelector("link[rel*='icon']");
+
+    link.type = "image/x-icon";
+    link.rel = "shortcut icon";
+
+    link.href = routeLink.href;
+
+    var routeTitle = response.querySelector("title");
+    var title = document.querySelector("title");
+
+    title.innerHTML = routeTitle.innerHTML;
+
     routeContainer.addEventListener(
       "animationend",
       this.animationEndRemoveClass,
@@ -53,7 +66,7 @@ class Router {
   go(url) {
     if (!this.httpRequest) return false;
 
-    history.replaceState({}, "", url);
+    history.pushState({}, "", url);
 
     this.httpRequest.onreadystatechange = () => {
       if (this.httpRequest.readyState === XMLHttpRequest.DONE) {
@@ -93,9 +106,9 @@ class Router {
     if (currSub === this.prevSub) return;
 
     if (currSub > this.prevSub) {
-      this.direction = "left";
-    } else {
       this.direction = "right";
+    } else {
+      this.direction = "left";
     }
 
     this.prevSub = currSub;
