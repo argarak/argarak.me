@@ -66,8 +66,6 @@ for i, val in enumerate(config["navbar"]):
     # config["navbar"][i]["url"] = "".join(tuple(url_list))
     config["navbar"][i]["url"] = url
 
-print(config["navbar"])
-
 # The order at which stylesheets are loaded does not matter, so glob all
 # stylesheets including subdirectories
 _common_styles = glob(os.path.join(app.static_folder,
@@ -90,8 +88,10 @@ _ext_scripts = ["%s" % (os.path.join(app.static_folder, "js", "common",
 _common_scripts = _ext_scripts + _common_scripts
 
 _common_stylus = glob(os.path.join(app.static_folder, "css",
-                                   "common") + "/**/*.styl",
-                      recursive=True)
+                                  "common") + "/**/*.styl",
+                     recursive=True)
+
+common_stylus = _common_stylus
 
 _common_styles += ["%s" % (os.path.splitext(i)[0] + ".css",)
                    for i in _common_stylus]
@@ -103,7 +103,7 @@ navbar = config["navbar"]
 # the compiled version as if it was in css in the first place.
 @app.route("/css/<path:path>.css")
 def compile_to_css(path):
-    for i in _common_stylus:
+    for i in common_stylus:
         # Removes the path before and including /static, i.e. removes
         # irrelevant (in this case) directory information such as the
         # specific path in the system (e.g. /home/user/argarak.me...)

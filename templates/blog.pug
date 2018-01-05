@@ -1,5 +1,32 @@
 extends head
 
 block body  
-  h1.title Welcome to the blog!
-  
+  noscript
+    .noscript-msg
+      h1 This page is JS reliant
+      h2 But do not worry...
+      
+      p
+        | You can view all of my articles at the public git repository:
+        | <a href="https://git.io/vNfl6">https://git.io/vNfl6</a>
+  #blog-loading
+  #blog-container
+    #title-side
+      .blog-title
+        | What's new in Version 4
+      .date-published
+        | 4 January 2018
+      #blog-controls
+        .post-play
+        .post-next
+        .post-prev
+        .search
+    #intro-side
+      #intro.
+        As you might have noticed, version 4 of the Argarak’s Nexus blog has 
+        been released! Some fairly standard user-interface changes have 
+        occurred, which you may have already noticed. This includes...
+      #dropdown-container
+        .blog-dropdown
+    #colour-side
+    

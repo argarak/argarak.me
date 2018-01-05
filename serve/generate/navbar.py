@@ -29,10 +29,7 @@ icon_path = ''.join((app.static_folder, "/icon/"))
 def navbar():
     icon_data = {}
 
-    print(icon_path + "*.svg")
-
     for i, val in enumerate(config["navbar"]):
-        print(i)
         try:
             with open(icon_path + val["filename"]) as f:
                 soup = Soup(f.read())
