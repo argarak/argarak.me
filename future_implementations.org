@@ -1,3 +1,7 @@
+* Back-end
+** Script Handling [0/2]
+- [ ] Combining scripts into one script (less HTTP requests)
+- [ ] Minifying the script 
 * Front-end
 ** Development Section
 *** Github-like contribution grid for each project

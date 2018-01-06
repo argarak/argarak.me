@@ -22,8 +22,6 @@ from serve.utils import lookup_favicon
 
 from os import path
 
-sources = common_sources
-
 class MainView(FlaskView):
     route_base = "/"
     subdomain = None
@@ -43,6 +41,8 @@ class MainView(FlaskView):
         self.subdomain = None
         self.template = "index.pug"
 
+        self.sources = common_sources
+
         self.meta = {
             "title": "main",
             "current_favicon": lookup_favicon(self.subdomain),
@@ -55,7 +55,7 @@ class MainView(FlaskView):
 
     def index(self):
         return render_template(self.template,
-                               sources=sources,
+                               sources=self.sources,
                                meta=self.meta,
                                tabs=self.tabs)
 

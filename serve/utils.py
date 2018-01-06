@@ -19,6 +19,8 @@ from common import app
 from config import config
 from bs4 import BeautifulSoup as Soup
 
+from os import path
+
 def lookup_favicon(directory=None):
     favicon_path = ''.join((config["protocol"],
                            "//",
@@ -63,3 +65,14 @@ def absolute_static_url(url):
                     "//",
                     app.config["SERVER_NAME"],
                     url))
+
+def get_svg_data(icon_src):
+    icons = {}
+
+    for i in icon_src:
+        name = path.splitext(i.split("/")[1:][0])[0]
+
+        with open(path.join(app.static_folder, i), "r") as f:
+            icons[name] = f.read()
+    
+    return icons

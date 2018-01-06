@@ -15,12 +15,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-#from common import app, common_sources, navbar, common_stylus
 import common
 
 from config import config
 from serve.subdomains.index import MainView
-from serve.utils import lookup_favicon
+from serve.utils import lookup_favicon, get_svg_data
 from flask_classy import FlaskView
 
 from flask import render_template
@@ -30,24 +29,11 @@ import pypandoc
 
 from bs4 import BeautifulSoup as Soup
 
-sources = common.common_sources
+_icon_src = [
+    "icon/arrow_down.svg"
+]
 
-_common_stylus = glob(path.join(common.app.static_folder,
-                                "css", "blog") + "/**/*.styl",
-                      recursive=True)
-
-common.common_stylus += _common_stylus
-
-_common_styles = ["%s" % (path.splitext(i)[0] + ".css",)
-                   for i in _common_stylus]
-
-_common_styles = ["%s" % (''.join((config["protocol"],
-                         "//",
-                         common.app.config["SERVER_NAME"],
-                         i.split("/static", 1)[1])),)
-                  for i in _common_styles]
-
-sources["styles"] = sources["styles"] + _common_styles;
+icons = get_svg_data(_icon_src)
 
 class BlogView(MainView):
     route_base = "/blog"
@@ -65,7 +51,16 @@ class BlogView(MainView):
             "is_article": False
         }
 
+        self.sources = common.common_sources
+
         self.generate_tabs(common.navbar)
+
+    def index(self):
+        return render_template(self.template,
+                               sources=self.sources,
+                               meta=self.meta,
+                               tabs=self.tabs,
+                               icons=icons)
 
     def article(self, article_name):
         try:
@@ -93,7 +88,7 @@ class BlogView(MainView):
                 return render_template(self.article_template,
                                        html=str(soup),
                                        meta=None,
-                                       sources=sources,
+                                       sources=self.sources,
                                        tabs=self.tabs)
 
         except IOError as err:
