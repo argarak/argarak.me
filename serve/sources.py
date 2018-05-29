@@ -19,6 +19,7 @@ from common import app
 from flask import send_from_directory
 
 import serve.generate.navbar
+import serve.generate.articles
 
 @app.route('/<root_path>/<path:path>')
 def redir_from_static(root_path, path):

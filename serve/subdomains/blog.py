@@ -22,7 +22,7 @@ from serve.subdomains.index import MainView
 from serve.utils import lookup_favicon, get_svg_data
 from flask_classy import FlaskView
 
-from flask import render_template
+from flask import render_template, abort
 from glob import glob
 from os import path
 import pypandoc
@@ -93,5 +93,6 @@ class BlogView(MainView):
 
         except IOError as err:
             print(err)
+            abort(404)
 
 BlogView.register(common.app)

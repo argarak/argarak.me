@@ -16,7 +16,7 @@
 # limitations under the License.
 
 config = {
-    "debug_domain": "argarak.dev:5000",
+    "debug_domain": "argarak.aoe:5000",
     "domain": "argarak.me",
 
     "subdirectories": [

@@ -21,7 +21,6 @@ from bs4 import BeautifulSoup as Soup
 from serve.generate.data import data
 
 import json
-import glob
 
 filename = "navbar.json"
 icon_path = ''.join((app.static_folder, "/icon/"))

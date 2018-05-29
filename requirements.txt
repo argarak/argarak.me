@@ -13,3 +13,4 @@ pypugjs==4.2.2
 six==1.10.0
 stylus==0.1.2
 Werkzeug==0.12.2
+python-frontmatter==0.4.2

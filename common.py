@@ -16,12 +16,27 @@
 # limitations under the License.
 
 import os
+import yaml
 import click
-from flask import Flask, render_template, send_from_directory, Response
+
+from flask import Flask, render_template, send_from_directory, Response, abort
+from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from glob import glob
 
 from config import config
+
+settings = {}
+
+try:
+    with open(os.path.expanduser("~") + "/.argarak.me.yml") as f:
+        settings = yaml.safe_load(f)
+        pass
+except IOError as err:
+    print(err)
+    print("Config file could not be loaded, " +
+          "check the README for more details.")
+    exit()
 
 from stylus import Stylus
 c_stylus = Stylus()
@@ -41,14 +56,19 @@ class CustomFlask(Flask):
 app = Flask(__name__)
 app.jinja_env.add_extension("pypugjs.ext.jinja.PyPugJSExtension")
 
+app.config["SQLALCHEMY_DATABASE_URI"] = settings["SQLALCHEMY_DATABASE_URI"]
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+db = SQLAlchemy(app)
+
 # Enable CORS (cross-origin) between subdomains
 CORS(app)
 
 if app.debug:
     import serve.debug
-    app.config['SERVER_NAME'] = 'argarak.dev:5000'
+    app.config['SERVER_NAME'] = config["debug_domain"]
 else:
-    app.config['SERVER_NAME'] = 'argarak.me'
+    app.config['SERVER_NAME'] = config["domain"]
 
 
 for i, val in enumerate(config["navbar"]):
@@ -122,6 +142,7 @@ def compile_to_css(path):
 
                 except IOError as err:
                     print(err)
+                    abort(404)
 
     return send_from_directory('static/css/' + path[:-len(
         path.split("/")[-1])], path.split("/")[-1] + ".css")
