@@ -40,6 +40,13 @@ class Blog {
   }
 
   beginBlogSequence() {
+    if (window.loadingUpdateInterval !== undefined) {
+      window.clearInterval(window.loadingUpdateInterval);
+    }
+
+    this.pause = false;
+    this.loadingPosition = 0;
+
     this.loadingElement = document.querySelectorAll(
       "#blog-loading .loading-bar"
     )[0];
@@ -53,7 +60,7 @@ class Blog {
       return;
     }
 
-    window.setInterval(() => {
+    window.loadingUpdateInterval = window.setInterval(() => {
       this.updateLoading(this);
     }, 40);
   }
