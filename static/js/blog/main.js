@@ -15,6 +15,24 @@ class Blog {
     if (self.loadingPosition >= 100) {
       self.changeArticle(1);
       self.loadingPosition = 0;
+      self.pause = true;
+
+      self.loadingElement.style.transition = "width 0.5s ease-out";
+      self.loadingElement.style.MozTransition = "width 0.5s ease-out";
+      self.loadingElement.style.WebkitTransition = "width 0.5s ease-out";
+
+      self.loadingElement.style.width = self.loadingPosition + "%";
+
+      self.loadingElement.addEventListener(
+        "transitionend",
+        function(event) {
+          self.pause = false;
+          self.loadingElement.style.transition = "width 0.1s linear";
+          self.loadingElement.style.MozTransition = "width 0.1s linear";
+          self.loadingElement.style.WebkitTransition = "width 0.1s linear";
+        },
+        false
+      );
     }
 
     self.loadingPosition++;
@@ -33,7 +51,7 @@ class Blog {
 
     window.setInterval(() => {
       this.updateLoading(this);
-    }, 100);
+    }, 40);
   }
 }
 
