@@ -3,6 +3,7 @@ class Router {
     this.httpRequest = new XMLHttpRequest();
     this.prevSub = 0;
     this.direction = "";
+    this.stateName = "";
   }
 
   animationEndRemoveClass(e) {
@@ -63,6 +64,12 @@ class Router {
         );
         break;
     }
+
+    let routerComplete = new CustomEvent("routerComplete", {
+      detail: this.stateName
+    });
+
+    window.dispatchEvent(routerComplete);
   }
 
   go(url) {
@@ -113,9 +120,22 @@ class Router {
       this.direction = "left";
     }
 
+    this.stateName = dir;
     this.prevSub = currSub;
     this.go("/" + dir);
   }
 }
+
+document.addEventListener("DOMContentLoaded", function(event) {
+  let path = window.location.pathname.split("/");
+  let currState = "";
+
+  if (path.length > 1) {
+    currState = path[1];
+  }
+
+  let routerComplete = new CustomEvent("routerComplete", {detail: currState});
+  window.dispatchEvent(routerComplete);
+});
 
 var router = new Router();

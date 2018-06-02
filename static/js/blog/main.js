@@ -44,7 +44,11 @@ class Blog {
       "#blog-loading .loading-bar"
     )[0];
 
-    if (this.loadingElement.length === 0 || this.loadingElement === null) {
+    if (
+      this.loadingElement === undefined ||
+      this.loadingElement.length === 0 ||
+      this.loadingElement === null
+    ) {
       console.error("Blog initialisation error: Loading bar not found.");
       return;
     }
@@ -56,3 +60,7 @@ class Blog {
 }
 
 var blog = new Blog();
+
+window.addEventListener("routerComplete", function(event) {
+  if (event.detail === "blog") blog.beginBlogSequence();
+});
