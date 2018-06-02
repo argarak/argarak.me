@@ -30,7 +30,12 @@ import pypandoc
 from bs4 import BeautifulSoup as Soup
 
 _icon_src = [
-    "icon/arrow_down.svg"
+    "icon/arrow_down.svg",
+    "icon/pause.svg",
+    "icon/play_arrow.svg",
+    "icon/skip_next.svg",
+    "icon/skip_previous.svg",
+    "icon/search.svg"
 ]
 
 icons = get_svg_data(_icon_src)

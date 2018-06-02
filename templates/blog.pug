@@ -13,15 +13,16 @@ block body
     .loading-bar
   #blog-container
     #title-side
-      .blog-title.slide-entry
-        | What's new in Version 4
-      .date-published.slide-entry
-        | 4 January 2018
+      #title-area
+        .blog-title.slide-entry
+          | What's new in Version 4
+        .date-published.slide-entry
+          | 4 January 2018
       #blog-controls
-        .post-play
-        .post-next
-        .post-prev
-        .search
+        button.round-btn.post-pause.white-fill!= icons.pause
+        button.round-btn.post-prev.white-fill!= icons.skip_previous
+        button.round-btn.post-next.white-fill!= icons.skip_next
+        button.round-btn.search.white-fill!= icons.search
     #intro-side
       #intro.slide-entry.
         As you might have noticed, version 4 of the Argarak’s Nexus blog has 
