@@ -15,14 +15,35 @@ class SlideTransition {
 
       var bounds = this.el[i].getBoundingClientRect();
 
-      console.log(bounds);
+      let currParent = this.el[i].parentNode;
+      let color = "";
 
+      for (;;) {
+        color = window
+          .getComputedStyle(currParent, null)
+          .getPropertyValue("background-color");
+
+        if (color != "rgba(0, 0, 0, 0)") {
+          break;
+        }
+
+        currParent = currParent.parentNode;
+
+        if (currParent === null) {
+          console.error(
+            "Could not find background colour for slide animation, aborting!",
+            this.el[i]
+          );
+          return false;
+        }
+      }
+
+      slideEl.style.backgroundColor = color;
       slideEl.style.width = bounds.width + "px";
       slideEl.style.height = bounds.height + "px";
       slideEl.style.top = bounds.top + "px";
       slideEl.style.left = bounds.left - 5 + "px";
 
-      console.log(slideEl);
       document.body.appendChild(slideEl);
 
       this.el[i].style.visibility = "visible";
@@ -31,7 +52,6 @@ class SlideTransition {
     var newEl = document.querySelectorAll(".slide-overlay");
 
     for (i = 0; i < newEl.length; i++) {
-      console.log(newEl[i]);
       window.getComputedStyle(newEl[i]).width;
 
       newEl[i].style.width = "0px";
