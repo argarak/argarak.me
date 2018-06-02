@@ -35,6 +35,14 @@ class SlideTransition {
       window.getComputedStyle(newEl[i]).width;
 
       newEl[i].style.width = "0px";
+
+      newEl[i].addEventListener(
+        "transitionend",
+        function(event) {
+          event.target.outerHTML = "";
+        },
+        false
+      );
     }
 
     return true;
@@ -43,6 +51,6 @@ class SlideTransition {
 
 var slide = new SlideTransition();
 
-document.addEventListener("DOMContentLoaded", function(event) {
+window.onload = function() {
   slide.animate();
-});
+};

@@ -11,6 +11,8 @@ class Router {
 
   animationEndRemove(e) {
     e.target.outerHTML = "";
+
+    slide.animate();
   }
 
   renderHTML(response) {
