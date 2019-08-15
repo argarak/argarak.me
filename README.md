@@ -1,6 +1,4 @@
-<p align="center">
-<img alt="argarak logo" width="200" src="https://avatars0.githubusercontent.com/u/13645600?v=4&u=bbad39bf950f806b60068338aba09aa536d94fb6&s=400">
-</p>
+**old version: see newdev branch**
 
 # argarak.me
 New website under different back-end.
