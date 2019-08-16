@@ -1,0 +1,7 @@
+extends head
+
+block head_append
+  {{html | extract_head}}
+  
+block body
+  {{html | extract_body}}

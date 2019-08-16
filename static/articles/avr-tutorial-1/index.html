@@ -1,0 +1,412 @@
+
+<!-- ?xml version="1.0" encoding="utf-8"? -->
+<!-- 2018-03-02 Fri 14:42 -->
+<meta http-equiv="Content-Type"
+  content="text/html;charset=utf-8">
+
+<meta name="viewport"
+  content="width=device-width, initial-scale=1">
+
+<title>AVR Libc Tutorial - Introduction and Blink Program</title>
+<meta name="generator"
+  content="Org-mode">
+
+<meta name="author"
+  content="Argarak">
+
+
+<style type="text/css"><!--/*--><![CDATA[/*><!--*/ @import url('https://fonts.googleapis.com/css?family=Roboto'); body { font-family: "Roboto", sans-serif; } #content { margin: 0 10vw; } .subtitle { color: #666; font-size: 24px; } .title { background: #eee; padding: 20px; } .figure p { text-align: center; } .figure p:last-child { background: #333; color: #fff; padding: 12px; } .figure p:last-child a { color: #ec407a; } a[href] { color: #e91e63; text-decoration: none; } li { margin: 10px 0; } #table-of-contents { background: #f9f9f9; padding: 20px; } img { box-shadow: 2px 5px 6px 2px #ccc; max-width: 70vw; } .footpara { display: inline; padding: 0; margin: 5px; } .footpara a { color: #ec407a; } .footdef { margin: 20px; } .footdef sup * { font-weight: bold; } .footref { vertical-align: super; font-size: 80%; font-weight: 500; } sup .footref { vertical-align: unset; font-size: 100%; } /*]]>*/-->
+</style>
+
+<script type="text/javascript">/* @licstart The following is the entire license notice for the JavaScript code in this tag. Copyright (C) 2012-2013 Free Software Foundation, Inc. The JavaScript code in this tag is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License (GNU GPL) as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version. The code is distributed WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU GPL for more details. As additional permission under GNU GPL version 3 section 7, you may distribute non-source (e.g., minimized or compacted) forms of that code without the copy of the GNU GPL normally required by section 4, provided you include this license notice and a URL through which recipients can access the Corresponding Source. @licend The above is the entire license notice for the JavaScript code in this tag. */ <!--/*--><![CDATA[/*><!--*/ function CodeHighlightOn(elem, id) { var target = document.getElementById(id); if(null != target) { elem.cacheClassElem = elem.className; elem.cacheClassTarget = target.className; target.className = "code-highlighted"; elem.className = "code-highlighted"; } } function CodeHighlightOff(elem, id) { var target = document.getElementById(id); if(elem.cacheClassElem) elem.className = elem.cacheClassElem; if(elem.cacheClassTarget) target.className = elem.cacheClassTarget; } /*]]>*///-->
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    displayAlign: "center",
+    displayIndent: "0em",
+
+    "HTML-CSS": {
+      scale: 100,
+      linebreaks: {automatic: "false"},
+      webFont: "TeX"
+    },
+    SVG: {
+      scale: 100,
+      linebreaks: {automatic: "false"},
+      font: "TeX"
+    },
+    NativeMML: {scale: 100},
+    TeX: {
+      equationNumbers: {autoNumber: "AMS"},
+      MultLineWidth: "85%",
+      TagSide: "right",
+      TagIndent: ".8em"
+    }
+  });
+
+</script>
+
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" />
+
+
+<div id="content">
+  <h1 class="title">AVR Libc Tutorial - Introduction and Blink Program</h1>
+
+  <p>The Arduino language has made it really simple to create “sketches” or programs which perform a directive. You may argue that the Arduino language is somewhat difficult as it is a C/C++ hybrid but I’d personally disagree. The language is fairly high level and uses predefined functions that don’t get in your way. But what if you wanted to program a AVR microcontroller more “down to the metal”? Then AVR libc is a good option.
+  </p>
+
+  <p>
+    <b>Please note that I am not an AVR libc expert in any shape, way, or form. I am actually learning while writing this tutorial from the aspect of someone who has been programming with Arduino already, but wanted to progress and understand the lower-level aspect of these microcontrollers.
+    </b>
+  </p>
+
+  <p>AVR libc is very useful because of the massive amount of support for devices, portability, speed and decreased RAM and flash ROM usage. This means you can have more functionality in a smaller space or faster amount of operations. Or maybe you just want to learn the lower-level method of programming AVR chips (which is the category I fall into).
+  </p>
+
+  <p>
+    <b>Skip to the third paragraph if you are already familiar with the term…
+    </b>
+  </p>
+
+  <p>Microcontrollers, if you did not know already, are, in layman’s terms, a computer on a chip. The chip has an Arithmetic Logic Unit for numerical and logic operations (as the name implies), Electronic Erasable Programmable Read Only Memory (a.k.a. EEPROM) to save data more permanently, Random Access Memory to store data temporarily usually as variables, data buses and more. It’s not a computer capable of running a modern operating system of course, since most microcontrollers don’t have a flash memory (for storing programs) even over 1 megabyte or a clock speed of more than a few megahertz. However, they are great for electronics projects and use digital and analogue signals to interface with the real world.
+  </p>
+
+  <p>AVR microcontrollers on the other hand, are normally 8-bit controllers in the AVR family. These are based on the RISC (Reduced instruction set computing) architecture, which is simply a method of reducing the work done by a microcontroller while performing the same operations. AVRs are produced by Atmel and include many features such as Serial and I2C. These microcontrollers are programmed via an ISP (in-system programmer) but that’s usually handled by your board of choice (unless you make your own of course). A serial connection to your computer allows it to send program data to the controller and flash its ROM. But I digress… AVR Libc is a programming code used to interact with electrical components and that’s what I’ll cover in this tutorial.
+  </p>
+
+  <p>Microcontrollers have pins and ports. Ports are very important for AVR libc programming. You can identify the ports on a microcontroller from its datasheet. Here’s an example from the ATmega328 (AVR chip commonly found on Arduino UNO boards) datasheet:
+  </p>
+
+  <div class="figure">
+
+    <p>
+      <img src="./mega328.png"
+        alt="mega328.png">
+
+    </p>
+    <p>
+      <span class="figure-number">Figure 1:
+      </span>Diagram of a microcontroller as seen from the top. All of its pins and ports are shown.
+    </p>
+  </div>
+
+  <p>You can identify a port from this diagram from the name of the pin to the left. Pin 1 has a name of `PC6` which is:
+  </p>
+
+  <p>``` P
+
+    <i>/ Pin C /
+    </i>port C 6 // Sixth pin in port ```
+  </p>
+
+  <p>This means that pin 19 (`PB5`) is the fifth pin on Port B.
+  </p>
+
+  <p>Each port is assigned two 8-bit binary numbers. One for direction, the other for output. For example, Port D has two global variables, PORTD and DDRD. Let’s say that both PORTD and DDRD have values of `00000000`.
+  </p>
+
+  <p>Before we can go over the syntax, I must first talk about an important aspect of AVR programming…
+  </p>
+
+  <p>## AND{md-permalink=""}
+  </p>
+
+  <p>Bitwise operations are operations just like arithmetic in C, but with binary digits (See this tutorial on binary if you are not familiar). Here are the operations you can do to binary digits in C:
+  </p>
+
+  <p>This is represented with one ampersand `&` and is just like AND in logic…
+  </p>
+
+  <p>![A diagram showing the inputs and outputs of AND logic.](AND Logic.png){md-lightbox=""}
+  </p>
+
+  <p>An AND operation requires two binary numbers, and this comparison is made between all of the numbers of the same position.
+  </p>
+
+  <p>### Example{md-permalink=""}
+  </p>
+
+  <p>Say we have two binary numbers: `01100001` and `01001001`. An AND operation performed between these numbers is as follows…
+  </p>
+
+  <p>``` 01100001 & 01001001
+  </p>
+  <hr>
+
+
+  <p>01000001 ```
+  </p>
+
+  <p>As you can see, an AND operation is completed on each column of digits, just like a truth table. `0 & 0
+    <code>= 0` `1 & 1 =</code>1` `1 & 0 == 0` etc.
+  </p>
+
+  <p>## OR{md-permalink=""}
+  </p>
+
+  <p>This is represented with a pipe `|` symbol and functions like an OR gate…
+  </p>
+
+  <p>![A diagram showing the inputs and outputs of OR logic.](OR Logic.png){md-lightbox=""}
+  </p>
+
+  <p>Just like AND, an OR operation requires a comparison between two binary numbers and it is done in the same way as AND, except each binary digit is put through an OR comparison.
+  </p>
+
+  <p>### Example{md-permalink=""}
+  </p>
+
+  <p>We have two binary numbers: `01010011` and `01100010`. This is how an OR comparison between these numbers would be made:
+  </p>
+
+  <p>``` 01010011
+  </p>
+
+  <table border="2"
+    cellspacing="0"
+    cellpadding="6"
+    rules="groups"
+    frame="hsides">
+
+    <colgroup>
+      <col class="org-right">
+
+    </colgroup>
+
+    <tbody>
+
+      <tr>
+        <td class="org-right">01100010</td>
+      </tr>
+    </tbody>
+  </table>
+  <hr>
+
+
+  <p>01110011 ```
+  </p>
+
+  <p>OR operations work very similarly to AND, however also output a 1 when only one of the inputs is HIGH: `0 | 0
+    <code>= 0` `0 | 1 =</code>1` `1 | 1 == 1`
+  </p>
+
+  <p>However, these ORs are not exclusive, therefore they output a 1 when both inputs are on.
+  </p>
+
+  <p>## XOR{md-permalink=""}
+  </p>
+
+  <p>XORs basically perform just like OR operations, except they output a 0 when both inputs are on, therefore making them e(X)clusive. In C, they are represented with a caret `^` symbol.
+  </p>
+
+  <p>![A diagram showing the inputs and outputs of XOR logic.](XOR Logic.png){md-lightbox=""}
+  </p>
+
+  <p>Everything is just like OR, except the output is 0 if both digits are the same:
+  </p>
+
+  <p>### Example{md-permalink=""}
+  </p>
+
+  <p>In this example, we have two binary numbers as usual: `01001100` and `11101001`. An XOR operation would take place like this:
+  </p>
+
+  <p>``` 01001100 ^ 11101001
+  </p>
+  <hr>
+
+
+  <p>10100101 ```
+  </p>
+
+  <p>It’s not necessary to describe how XOR operations work, as it’s just OR, but when both digits are the same, it outputs 0.
+  </p>
+
+  <p>## Left Shift{md-permalink=""}
+  </p>
+
+  <p>Shifts are a little different from regular logic operations. These move binary numbers a specific number of places either left or right.
+  </p>
+
+  <p>
+    <b>
+      <b>Mention that _BV() is a better way of using left bitshift in AVR</b>
+    </b>
+  </p>
+
+  <p>## Right Shift{md-permalink=""}
+  </p>
+
+  <p>## NOT{md-permalink=""}
+  </p>
+
+  <p>## Assignment Operators{md-permalink=""}
+  </p>
+
+  <p>Just like for arithmetic, logic has assignment operators. An assignment operator calculates the result and then assigns it to the variable. For example, for addition, an assignment operator looks like this:
+  </p>
+
+  <p>`i += 5`
+  </p>
+
+  <p>…and for subtraction
+  </p>
+
+  <p>`i -= 5` etc.
+  </p>
+
+  <p>Bitwise operators also have these. They are just the same operator with a equals sign at the end. For example:
+  </p>
+
+  <p>```c i &= a;
+
+    <i>/ AND assignment i |= a; /
+    </i>OR assignment i ^= a;
+
+    <i>/ XOR assignment i >>= a; /
+    </i>Right Shift assignment i <<= a; // Left Shift assignment ```
+  </p>
+
+  <p>## How is this useful?{md-permalink=""}
+  </p>
+
+  <p>Bitwise operations are important in AVR libc programming because it is the basis of digital I/O for the microcontroller. For example, to set a pin to be HIGH you would run a bitwise OR operation between the port and the pin, where the pin is left shifted.
+  </p>
+
+  <p>One nice thing about using AVR libc is that it is very easy to toggle a pin on or off with XOR assignment.
+  </p>
+
+  <p>When writing programs in AVR, it will throw an error (will it?) saying that you have to define F
+    <sub>CPU</sub>which is your microcontroller’s clock speed.
+  </p>
+
+  <p>```c #ifndef F
+    <sub>CPU</sub>#define F
+    <sub>CPU</sub>16000000UL #endif
+  </p>
+
+  <p>#include <avr/io.h> #include <util/delay.h>
+  </p>
+
+  <p>#define LED
+    <sub>PIN</sub>PORTD5 #define LED
+    <sub>DIR</sub>DDD5
+  </p>
+
+  <p>void blinkLoop(void) { PORTD |= _BV(LED
+    <sub>PIN</sub>); _delay
+    <sub>ms</sub>(1000); PORTD &= ~
+    <sub>BV</sub>(LED
+    <sub>PIN</sub>); _delay
+    <sub>ms</sub>(1000); }
+  </p>
+
+  <p>int main(void) { DDRD |= _BV(LED
+    <sub>DIR</sub>); while(1) blinkLoop(); } ```
+  </p>
+
+  <p>### Walk-through{md-permalink=""}
+  </p>
+
+  <p>```c #ifndef F
+    <sub>CPU</sub>#define F
+    <sub>CPU</sub>16000000UL #endif ```
+  </p>
+
+  <p>The global variable `F
+    <sub>CPU
+    </sub>` is important during compilation. It basically gives the compiler an idea of how fast the processor is on the microcontroller. In this case, the ATMEGA328P uses a clock speed of 16Mhz or 16000000 Hz, the `F
+    <sub>CPU</sub>` variable stores the amount of hertz the processor has.
+  </p>
+
+  <p>A good way of identifying the speed of a microcontroller, is identifying the crystal on the board. Most crystals have a number on them, which identify the clock speed, in MHz.
+  </p>
+
+  <p>![An image of a crystal (silver component in the centre) displaying its speed in MHz.](crystal.png){md-lightbox=""}
+  </p>
+
+  <p>Another way of knowing a microcontroller’s clock speed is in its datasheet.
+  </p>
+
+  <p>One important note is that you have to
+  </p>
+
+  <p>```c #include <avr/io.h> #include <util/delay.h> ```
+  </p>
+
+  <p>These are the necessary include headers for this file. `<avr/io.h>` is used for digital I/O (global variables for DD\*, PORT\*, etc.) and `<util/delay.h>` provides `
+    <sub>delay</sub>
+    <sub>ms</sub>()` and `
+    <sub>delay</sub>
+    <sub>us
+    </sub>()`, which are delay functions for AVR Libc (milliseconds and microseconds). These functions are not recommended in most cases as it halts the entire microcontroller, but for blinking LEDs, it’s perfectly adequate.
+  </p>
+
+  <p>```c #define LED
+    <sub>PIN</sub>PORTD5 #define LED
+    <sub>DIR</sub>DDD5 ```
+  </p>
+
+  <p>These are user-defined global variables which help to understand the program a little bit better. `LED
+    <sub>PIN
+    </sub>` is assigned to `PORTD5` which is a variable that sets the output of Port D, Pin 5 which is pin 11 as seen in the first diagram. `LED
+    <sub>DIR
+    </sub>`, on the other hand, stores the direction of the pin, whether it is an input or an output.
+  </p>
+
+  <p>```c void blinkLoop(void) { PORTD |= _BV(LED
+    <sub>PIN</sub>); _delay
+    <sub>ms</sub>(1000); PORTD &= ~
+    <sub>BV</sub>(LED
+    <sub>PIN</sub>); _delay
+    <sub>ms</sub>(1000); } ```
+  </p>
+
+  <p>This is a user-defined function which turns the pin on and off once, with a delay of one second.
+  </p>
+
+  <p>## Makefile for Arduino UNO boards
+  </p>
+
+  <p>```makefile F
+    <sub>CPU
+    </sub>=16000000UL BOARD=atmega328p FILE=blink BAUDRATE=115200 ACMPORT=/dev/ttyACM0
+  </p>
+
+  <p>all: compile
+  </p>
+
+  <p>compile: avr-gcc -g -Os -mmcu=$(BOARD) -c $(FILE).c avr-gcc -g -mmcu=atmega8 -o $(FILE).elf $(FILE).o avr-objcopy -j .text -j .data -O ihex $(FILE).elf $(FILE).hex
+  </p>
+
+  <p>upload: avrdude -v -p $(BOARD) -C
+    <i>home/kzer-za
+    </i>.platformio/packages/tool-avrdude/avrdude.conf -c arduino -b $(BAUDRATE) -P \((ACMPORT) -D -U flash:w:./\)(FILE).hex:i
+  </p>
+
+  <p>clean: rm *.o *.elf *.hex ```
+  </p>
+
+  <p>
+    <b>Diagrams on this blog post have been made in draw.io (except the first one of course)
+    </b>
+  </p>
+
+  <p>
+    <b>
+      <b>There are probably many mistakes in this article since I am not an AVR expert. Please either [email me](/#/about#contact) or throw an issue over at Github. Any constructive criticism is highly appreciated!
+      </b>
+    </b>
+  </p>
+</div>
+
+<div id="postamble"
+  class="status">
+  <p class="author">Author: Argarak</p>
+  <p class="date">Created: 2018-03-02 Fri 14:42</p>
+  <p class="validation">
+    <a href="http://validator.w3.org/check?uri=referer">Validate</a>
+  </p>
+</div>

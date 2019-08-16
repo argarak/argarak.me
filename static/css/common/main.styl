@@ -1,0 +1,117 @@
+
+/*
+ * Add Roboto font (and variants) using @font-face because why should you need
+ * to make a external request to Google's APIs anyway when you can have it
+ * self-hosted?
+ */
+@font-face
+  font-family "Roboto"
+  src url("/font/roboto/Roboto-Regular.woff2") format("woff2"),
+      url("/font/roboto/Roboto-Regular.woff") format("woff"),
+      url("/font/roboto/Roboto-Regular.ttf") format("truetype");
+  font-weight 400
+
+@font-face
+  font-family "Roboto"
+  src url("/font/roboto/Roboto-Light.woff2") format("woff2"),
+      url("/font/roboto/Roboto-Light.woff") format("woff"),
+      url("/font/roboto/Roboto-Light.ttf") format("truetype");
+  font-weight 300
+
+@font-face
+  font-family "Roboto"
+  src url("/font/roboto/Roboto-Medium.woff2") format("woff2"),
+      url("/font/roboto/Roboto-Medium.woff") format("woff"),
+      url("/font/roboto/Roboto-Medium.ttf") format("truetype");
+  font-weight 500
+
+@font-face
+  font-family "Roboto"
+  src url("/font/roboto/Roboto-Bold.woff2") format("woff2"),
+      url("/font/roboto/Roboto-Bold.woff") format("woff"),
+      url("/font/roboto/Roboto-Bold.ttf") format("truetype");
+  font-weight 700
+
+body
+  background-color #111
+  color #ccc
+
+  margin 0
+  padding 0
+
+  font-family "Roboto", sans-serif
+  speak none
+
+  font-style normal
+  font-weight 300
+  font-variant normal
+  text-transform none
+
+  -webkit-font-smoothing antialiased
+  line-height 1.5
+
+.noscript-msg
+    background #000
+    padding 10px
+    margin auto
+    position fixed
+    width 600px
+    height 200px
+    top 50%
+    left 50%
+    margin-top -100px
+    margin-left -300px
+    box-shadow 0px 0px 20px #000
+
+.noscript-msg *
+    text-align center
+
+.slide-entry
+  visibility hidden
+
+.slide-overlay
+  transition 0.5s width ease
+  position absolute
+  background #000
+
+  z-index 999
+
+  -webkit-transform skewX(10deg)
+  -moz-transform skewX(10deg)
+  -o-transform skewX(10deg)
+  transform skewX(10deg)
+
+.white-fill
+  fill #fff
+
+button::-moz-focus-inner
+  border 0
+
+button:focus
+  border 0
+
+.round-btn
+  border-radius 100%
+  padding 5px
+
+  width 40px
+  height 40px
+
+  display inline-flex
+  justify-content center
+
+  background rgba(0, 0, 0, 0)
+  border none
+
+  transition background 0.1s ease
+
+  &:focus
+    background rgba(255, 255, 255, 0.2)
+    outline none
+
+  &:hover
+    background rgba(255, 255, 255, 0.1)
+    cursor pointer
+
+  &:active
+    background rgba(255, 255, 255, 0.3)

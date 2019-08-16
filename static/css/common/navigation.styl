@@ -1,0 +1,113 @@
+
+$nav-color = #070707
+$move-in-time = 0.5s
+$move-out-time = 0.5s
+
+/* Colour and Positioning */
+#navigation
+  display flex
+  position fixed
+
+  flex-direction column
+  justify-content center
+  align-items center
+
+  height 48px
+  width 100vw
+
+  bottom 0
+
+  background-color $nav-color
+  box-shadow 0px 0px 5px #000
+
+  .tab-container
+    flex 99
+    display flex
+    align-items center
+
+    max-width 100vw
+    overflow-x hidden
+
+    margin-left 48px
+
+    .highlight-bar
+      position relative
+      bottom -22px
+      height 2px
+      min-width 64px
+
+      background-color #000
+      transition all 0.1s cubic-bezier(.5, .05, .59, .97)
+
+    .tab
+      user-drag none
+      user-select none
+      padding 8px
+      *
+        height 24px
+
+/* Interactivity */
+.tab
+  transition all 0.1s
+
+  &:hover
+    background rgba(255,255,255,0.01)
+    border-radius 2px
+    cursor pointer
+
+  &:focus
+    outline none
+    background rgba(255,255,255,0.1)
+    border-radius 2px
+    cursor pointer
+    
+#navigation
+  transition filter 0.2s linear
+  filter brightness(50%)
+
+  &:hover
+    filter brightness(100%)
+
+#router-container
+  width 100%
+  height calc(100% - 48px)
+  
+  overflow-wrap normal
+  white-space nowrap
+  position fixed
+
+@keyframes slideOutRight
+  from
+    left 0vw
+  to
+    left 100vw
+
+@keyframes slideInLeft
+  from
+    left -100vw
+  to
+    left 0vw
+
+@keyframes slideOutLeft
+  from
+    left 0vw
+  to
+    left -100vw
+
+@keyframes slideInRight
+  from
+    left 100vw
+  to
+    left 0vw
+
+.router-move-out-right
+  animation $move-out-time slideOutRight ease-in
+
+.router-move-in-left
+  animation $move-in-time slideInLeft ease-out
+
+.router-move-out-left
+  animation $move-out-time slideOutLeft ease-in
+
+.router-move-in-right
+  animation $move-in-time slideInRight ease-out

@@ -1,0 +1,44 @@
+doctype html
+
+html(lang="en")
+  head
+    {% if meta is not none %}
+    title {{meta["title"]}}
+
+    meta(charset="utf-8")
+    link(rel="author" href="https://about.argarak.me/")
+    link(rel="license" href="https://about.argarak.me/licensing")
+    meta(http-equiv="X-UA-Compatible" content="IE=edge,chrome=1")
+    meta(name="viewport" content="width=device-width")
+    link(rel="shortcut icon" href="{{meta.current_favicon}}")
+    meta(name="description" content="{{meta.description}}")
+
+    {% if meta.is_article == true %}
+    meta(name="keywords" content="{{meta.article.tags}}")
+      //meta(name="Argarak" lang="en" content="")
+    {% else %}
+    meta(name="keywords" content="{{meta.default_tags}}")
+    {% endif %}
+    {% endif %}
+    
+    {% for style in sources.styles %}
+    link(rel="stylesheet" href="{{style}}")
+    {% endfor %}
+    
+    {% for script in sources.scripts %}
+    script(src="{{script}}")
+    {% endfor %}
+
+    block head_append
+    
+  body
+    #app
+      #router-container
+        block body
+      #navigation
+        .tab-container
+          each tab in tabs
+            a.tab(href=tab.aburl
+                  subdir=tab.url 
+                  position=tab.index)!= tab.svgData
+          .highlight-bar

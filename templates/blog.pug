@@ -1,0 +1,34 @@
+extends head
+
+block body  
+  noscript
+    .noscript-msg
+      h1 This page is JS reliant
+      h2 But do not worry...
+      
+      p
+        | You can view all of my articles at the public git repository:
+        | <a href="https://git.io/vNfl6">https://git.io/vNfl6</a>
+  #blog-loading
+    .loading-bar
+  #blog-container
+    #title-side
+      #title-area
+        .blog-title.slide-entry
+          | What's new in Version 4
+        .date-published.slide-entry
+          | 4 January 2018
+      #blog-controls
+        button.round-btn.post-pause.white-fill!= icons.pause
+        button.round-btn.post-prev.white-fill!= icons.skip_previous
+        button.round-btn.post-next.white-fill!= icons.skip_next
+        button.round-btn.search.white-fill!= icons.search
+    #intro-side
+      #intro.slide-entry.
+        As you might have noticed, version 4 of the Argarak’s Nexus blog has 
+        been released! Some fairly standard user-interface changes have 
+        occurred, which you may have already noticed. This includes...
+      #dropdown-container
+        .blog-dropdown!= icons.arrow_down
+        
+    #colour-side
